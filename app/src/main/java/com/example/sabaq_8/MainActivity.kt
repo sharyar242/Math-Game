@@ -10,8 +10,18 @@ import java.lang.Math.random
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
+
+    companion object{
+        const val LEVEL_COUNT =0
+        const val RIGHT_ANSWERS_COUNT = "rightAnswerCount"
+    }
+
     private val random= Random
     private var res = 0
+    private var currentLevelCount =1
+    private var right = 0
+    private var wrong = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -19,16 +29,21 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     fun variantClick(button: View){
          val selectedVariant = (button as Button ).text.toString().toInt()
-         if (selectedVariant== res )
-             getRightAnswer()
-         else{
-             val intent = Intent(this,second::class.java)
+        if (selectedVariant==res)
+            right++
+        else wrong++
+        if (currentLevelCount== LEVEL_COUNT){
+            val intent = Intent(this,second::class.java)
+            intent.putExtra(RIGHT_ANSWERS_COUNT,right)
              startActivity(intent)
-         }
+            finish()
+        }else{
+            getRightAnswer()
+        }
     }
+
 
     private fun getRightAnswer() {
         var firstNumber= random.nextInt(10 , 100)
