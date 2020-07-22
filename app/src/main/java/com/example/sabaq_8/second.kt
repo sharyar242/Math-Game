@@ -10,6 +10,11 @@ class second : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
+
+        var rightAnswerCount =intent.getIntExtra(MainActivity.RIGHT_ANSWERS_COUNT,0)
+        tvresultR.text = "$rightAnswerCount/${MainActivity.LEVEL_COUNT}"
+
+
         restart.setOnClickListener {
             val intent = Intent (this,MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
